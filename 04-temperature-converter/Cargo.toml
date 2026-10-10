@@ -1,0 +1,12 @@
+[package]
+name = "temperature_converter_cli"
+version = "0.1.0"
+edition = "2021"
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Project 04: Robust multi-scale Temperature Converter CLI with absolute zero validation and formatted tables"
+
+[dependencies]
+
+[dev-dependencies]

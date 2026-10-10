@@ -17,3 +17,7 @@ version = "0.1.0"
 [[package]]
 name = "hello_world_cli"
 version = "0.1.0"
+
+[[package]]
+name = "temperature_converter_cli"
+version = "0.1.0"

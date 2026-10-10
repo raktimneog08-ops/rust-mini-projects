@@ -12,9 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - **Project #02 (`fizzbuzz_cli`)**: Implemented customizable FizzBuzz CLI engine with streaming iterators, arbitrary divisor-to-label rules, single number evaluation, and integration test suite.
 - **Project #03 (`guessing_game_cli`)**: Implemented interactive number guessing game with difficulty presets (Easy, Medium, Hard, Custom), dynamic parity & quadrant hints, and deterministic state machine.
+- **Project #04 (`temperature_converter_cli`)**: Implemented thermodynamic temperature converter across Celsius, Fahrenheit, Kelvin, and Rankine scales with physical absolute zero validation, shorthand string parsing, and range table formatting.
 
 ### Planned
-- Incremental implementation of remaining mini projects (Project #04 through #99)
+- Incremental implementation of remaining mini projects (Project #05 through #99)
 - Benchmark and performance profiling suite for algorithms and data structures
 
 ---

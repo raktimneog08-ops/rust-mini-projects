@@ -42,8 +42,9 @@ rust-mini-projects/
 | **01** | [Hello World CLI](01-hello-world) | [`01-hello-world/`](01-hello-world/) | CLI | ✅ Complete |
 | **02** | [FizzBuzz CLI](02-fizzbuzz) | [`02-fizzbuzz/`](02-fizzbuzz/) | CLI | ✅ Complete |
 | **03** | [Guessing Game CLI](03-guessing-game) | [`03-guessing-game/`](03-guessing-game/) | CLI | ✅ Complete |
-| **04** | Temperature Converter | [`04-temperature-converter/`](04-temperature-converter/) | CLI | 📋 Planned |
-| ... | *Projects 04 - 99* | ... | Varied | 📋 Planned |
+| **04** | [Temperature Converter](04-temperature-converter) | [`04-temperature-converter/`](04-temperature-converter/) | CLI | ✅ Complete |
+| **05** | Fibonacci Generator | [`05-fibonacci-generator/`](05-fibonacci-generator/) | CLI | 📋 Planned |
+| ... | *Projects 06 - 99* | ... | Varied | 📋 Planned |
 | **100** | [Cosmic Defender WASM](100-rust-to-wasm-game) | [`100-rust-to-wasm-game/`](100-rust-to-wasm-game/) | WASM Game | ✅ Complete |
 
 ---
