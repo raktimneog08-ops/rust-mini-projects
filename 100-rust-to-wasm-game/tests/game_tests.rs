@@ -97,7 +97,7 @@ fn test_game_state_and_loop() {
     }
 
     assert!(
-        game.bullets.len() > 0,
+        !game.bullets.is_empty(),
         "Player bullets should have been fired"
     );
     assert!(

@@ -2,10 +2,12 @@
 resolver = "2"
 members = [
     "01-hello-world",
+    "02-fizzbuzz",
     "100-rust-to-wasm-game",
 ]
 default-members = [
     "01-hello-world",
+    "02-fizzbuzz",
     "100-rust-to-wasm-game",
 ]
 

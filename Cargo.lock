@@ -7,5 +7,9 @@ name = "cosmic_defender_wasm"
 version = "0.1.0"
 
 [[package]]
+name = "fizzbuzz_cli"
+version = "0.1.0"
+
+[[package]]
 name = "hello_world_cli"
 version = "0.1.0"

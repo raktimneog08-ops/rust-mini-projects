@@ -9,8 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Project #02 (`fizzbuzz_cli`)**: Implemented customizable FizzBuzz CLI engine with streaming iterators, arbitrary divisor-to-label rules, single number evaluation, and integration test suite.
+
 ### Planned
-- Incremental implementation of remaining mini projects (Project #02 through #99)
+- Incremental implementation of remaining mini projects (Project #03 through #99)
 - Benchmark and performance profiling suite for algorithms and data structures
 
 ---

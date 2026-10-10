@@ -1,0 +1,12 @@
+[package]
+name = "fizzbuzz_cli"
+version = "0.1.0"
+edition = "2021"
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Project 02: Configurable FizzBuzz CLI with customizable modular rules and iterator streams"
+
+[dependencies]
+
+[dev-dependencies]
