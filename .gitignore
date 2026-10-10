@@ -1,0 +1,38 @@
+# Rust Build Artifacts
+/target/
+**/target/
+**/*.rs.bk
+*.pdb
+*.rlib
+*.dylib
+*.so
+*.dll
+
+# WASM / Web Build Artifacts
+**/dist/
+**/pkg/
+*.wasm.d
+
+# Dependencies & Lockfiles (keep root lockfile if binary workspace, ignore temp)
+tmp/
+*.log
+
+# IDEs & Editor Configuration
+.vscode/
+.idea/
+*.swp
+*.swo
+*.iml
+
+# OS System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets, Environment & Credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+mcp.json

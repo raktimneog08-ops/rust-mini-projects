@@ -1,0 +1,14 @@
+# <type>(<scope>): <short summary in imperative mood>
+# │       │        │
+# │       │        └─> Present tense ("add" not "added"), lowercase, no period at end.
+# │       └─> Scope of change: e.g. workspace, 01-hello-world, 100-wasm-game, ci, release
+# └─> Type: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+
+# Why was this change necessary? What problem does it solve?
+
+# How does this address the issue? What side effects might exist?
+
+# Breaking Changes (if any):
+# BREAKING CHANGE: <explanation of breaking change and migration guide>
+
+# References / Issues (e.g., Closes #12, Fixes #34):

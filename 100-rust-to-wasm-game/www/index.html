@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmic Defender WASM | Rust WebAssembly Arcade</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas" width="800" height="900"></canvas>
+    <div id="crt-overlay" class="crt-overlay"></div>
+
+    <!-- Quick Settings Top Right -->
+    <div class="settings-bar">
+      <button id="btn-sound" class="btn-icon" title="Toggle Sound">🔊</button>
+      <button id="btn-crt" class="btn-icon" title="Toggle CRT Filter">📺</button>
+      <button id="btn-pause" class="btn-icon" title="Pause Game">⏸️</button>
+    </div>
+
+    <!-- Heads Up Display (HUD) -->
+    <div id="hud">
+      <div class="hud-top">
+        <div class="hud-box score-panel">
+          <span class="label">Score</span>
+          <span id="score-display" class="score-val">000000</span>
+          <span class="high-score-val">HI: <span id="high-score-display">000000</span></span>
+        </div>
+
+        <div class="hud-box wave-panel">
+          <span class="label">Sector</span>
+          <div id="wave-display" class="wave-val">WAVE 1</div>
+        </div>
+
+        <div class="hud-box status-panel">
+          <div class="bar-container">
+            <span class="label bar-label" style="color: var(--neon-cyan)">SHIELD</span>
+            <div class="bar-track">
+              <div id="shield-bar" class="bar-fill shield-fill" style="width: 100%"></div>
+            </div>
+          </div>
+          <div class="bar-container">
+            <span class="label bar-label" style="color: var(--neon-green)">HULL</span>
+            <div class="bar-track">
+              <div id="health-bar" class="bar-fill health-fill" style="width: 100%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Combo Notification -->
+      <div id="combo-box" class="combo-indicator" style="opacity: 0">
+        <div id="combo-display" class="combo-num">x10</div>
+        <div class="label" style="color: var(--neon-orange)">COMBO STREAK</div>
+      </div>
+
+      <div class="hud-bottom">
+        <div class="hud-box weapon-badge">
+          <span class="weapon-icon">⚡</span>
+          <div>
+            <div id="weapon-name" class="weapon-name">PLASMA BLASTER</div>
+            <div id="weapon-level" class="weapon-level">POWER LVL 1</div>
+          </div>
+        </div>
+
+        <div class="hud-box emp-panel">
+          <span class="label" style="margin-right: 4px;">EMP (E)</span>
+          <div id="emp-orb-1" class="emp-orb active"></div>
+          <div id="emp-orb-2" class="emp-orb active"></div>
+          <div id="emp-orb-3" class="emp-orb"></div>
+          <div id="emp-orb-4" class="emp-orb"></div>
+          <div id="emp-orb-5" class="emp-orb"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Touch Controls -->
+    <div class="mobile-controls">
+      <button id="touch-emp" class="touch-btn">EMP</button>
+      <button id="touch-fire" class="touch-btn" style="background: rgba(255, 0, 127, 0.3); border-color: var(--neon-magenta)">FIRE</button>
+    </div>
+
+    <!-- Start / Title Screen Modal -->
+    <div id="start-screen" class="overlay-screen">
+      <h1 class="game-title">Cosmic Defender</h1>
+      <div class="subtitle">Rust + WebAssembly Arcade Core</div>
+
+      <div class="instructions-grid">
+        <div class="inst-card">
+          <div class="inst-key">W A S D / Arrow Keys</div>
+          <div class="inst-desc">Move spaceship & dodge incoming fire</div>
+        </div>
+        <div class="inst-card">
+          <div class="inst-key">SPACE / Left Click</div>
+          <div class="inst-desc">Primary blasters & plasma cannons</div>
+        </div>
+        <div class="inst-card">
+          <div class="inst-key">E / Shift Key</div>
+          <div class="inst-desc">Deploy EMP shockwave (Clears bullets)</div>
+        </div>
+        <div class="inst-card">
+          <div class="inst-key">Gamepad Support</div>
+          <div class="inst-desc">D-Pad/Stick to move, A/RT to fire, B/LT for EMP</div>
+        </div>
+      </div>
+
+      <button id="btn-start" class="btn-arcade">INITIALIZE SYSTEM</button>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-screen" class="overlay-screen hidden">
+      <h1 class="game-title" style="background: linear-gradient(135deg, #ff0055, #ff9900); -webkit-background-clip: text;">SHIP DESTROYED</h1>
+      <div class="subtitle">Sector Defense Failed</div>
+
+      <div style="margin: 20px 0;">
+        <div class="label" style="font-size: 14px;">FINAL SCORE</div>
+        <div id="final-score-display" class="score-val" style="font-size: 40px; margin: 8px 0;">000000</div>
+        <div id="new-high-score-badge" class="label" style="color: var(--neon-yellow); display: none;">🏆 NEW RECORD!</div>
+      </div>
+
+      <button id="btn-restart" class="btn-arcade">RELAUNCH VESSEL</button>
+    </div>
+
+    <!-- Pause Screen Modal -->
+    <div id="pause-screen" class="overlay-screen hidden">
+      <h1 class="game-title">SYSTEM PAUSED</h1>
+      <div class="subtitle">Awaiting Pilot Command</div>
+      <button id="btn-resume" class="btn-arcade">RESUME MISSION</button>
+    </div>
+  </div>
+
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

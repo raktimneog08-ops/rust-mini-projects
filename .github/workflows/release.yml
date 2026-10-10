@@ -1,0 +1,156 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag name to release (e.g., v0.1.0)'
+        required: false
+        default: 'v0.1.0'
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-binaries:
+    name: Build Binary Artifacts (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact_name: rust-mini-projects-linux-x86_64.tar.gz
+            asset_type: tar
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact_name: rust-mini-projects-windows-x86_64.zip
+            asset_type: zip
+          - os: macos-latest
+            target: x86_64-apple-darwin
+            artifact_name: rust-mini-projects-macos-x86_64.tar.gz
+            asset_type: tar
+          - os: macos-latest
+            target: aarch64-apple-darwin
+            artifact_name: rust-mini-projects-macos-aarch64.tar.gz
+            asset_type: tar
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Build release binaries
+        run: cargo build --release --locked --target ${{ matrix.target }} --workspace --bins
+
+      - name: Package artifacts (Unix)
+        if: matrix.asset_type == 'tar'
+        run: |
+          mkdir -p dist
+          find target/${{ matrix.target }}/release -maxdepth 1 -type f -executable -exec cp {} dist/ \; 2>/dev/null || true
+          # Copy readme and license into bundle
+          cp README.md dist/ 2>/dev/null || true
+          tar -czvf ${{ matrix.artifact_name }} -C dist .
+          shasum -a 256 ${{ matrix.artifact_name }} > ${{ matrix.artifact_name }}.sha256
+
+      - name: Package artifacts (Windows)
+        if: matrix.asset_type == 'zip'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path dist -Force
+          Get-ChildItem -Path target/${{ matrix.target }}/release/*.exe | Copy-Item -Destination dist
+          if (Test-Path README.md) { Copy-Item README.md dist }
+          Compress-Archive -Path dist/* -DestinationPath ${{ matrix.artifact_name }} -Force
+          $hash = (Get-FileHash -Path ${{ matrix.artifact_name }} -Algorithm SHA256).Hash.ToLower()
+          "$hash  $($matrix.artifact_name)" | Out-File -FilePath "${{ matrix.artifact_name }}.sha256" -Encoding ascii
+
+      - name: Upload artifact archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: |
+            ${{ matrix.artifact_name }}
+            ${{ matrix.artifact_name }}.sha256
+
+  build-wasm-bundle:
+    name: Build WASM Web Bundle (Project #100)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Build WASM binary
+        run: cargo build --release --locked --target wasm32-unknown-unknown -p cosmic_defender_wasm
+
+      - name: Package WASM web bundle
+        shell: bash
+        run: |
+          mkdir -p wasm-dist
+          # Copy WASM output
+          cp target/wasm32-unknown-unknown/release/cosmic_defender_wasm.wasm wasm-dist/
+          # Copy HTML5 Canvas frontend & server assets
+          cp -r 100-rust-to-wasm-game/www/* wasm-dist/
+          cp 100-rust-to-wasm-game/serve.py wasm-dist/ 2>/dev/null || true
+          cp 100-rust-to-wasm-game/README.md wasm-dist/PROJECT100_README.md
+          
+          cd wasm-dist
+          zip -r ../cosmic-defender-wasm-web.zip .
+          cd ..
+          shasum -a 256 cosmic-defender-wasm-web.zip > cosmic-defender-wasm-web.zip.sha256
+
+      - name: Upload WASM web bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: cosmic-defender-wasm-web.zip
+          path: |
+            cosmic-defender-wasm-web.zip
+            cosmic-defender-wasm-web.zip.sha256
+
+  publish-github-release:
+    name: Publish GitHub Release
+    needs: [build-binaries, build-wasm-bundle]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all built artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Generate Consolidated SHA256SUMS
+        shell: bash
+        run: |
+          cd artifacts
+          cat *.sha256 > SHA256SUMS.txt
+          rm -f *.sha256
+          ls -la
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag_name || github.ref_name }}
+          name: Release ${{ github.event.inputs.tag_name || github.ref_name }}
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+          files: |
+            artifacts/*

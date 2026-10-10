@@ -1,0 +1,12 @@
+[package]
+name = "hello_world_cli"
+version = "0.1.0"
+edition = "2021"
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Project 01: Hello World CLI with greeting personalization and formatting"
+
+[dependencies]
+
+[dev-dependencies]

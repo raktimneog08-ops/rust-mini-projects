@@ -1,0 +1,39 @@
+[workspace]
+resolver = "2"
+members = [
+    "01-hello-world",
+    "100-rust-to-wasm-game",
+]
+default-members = [
+    "01-hello-world",
+    "100-rust-to-wasm-game",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Raktim Neog <raktimneog08-ops@users.noreply.github.com>"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/raktimneog08-ops/rust-mini-projects"
+homepage = "https://github.com/raktimneog08-ops/rust-mini-projects"
+readme = "README.md"
+
+[workspace.lints.rust]
+unsafe_code = "warn"
+missing_docs = "allow"
+
+[workspace.lints.clippy]
+all = "warn"
+dbg_macro = "warn"
+todo = "warn"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.dev]
+opt-level = 0
+debug = true
