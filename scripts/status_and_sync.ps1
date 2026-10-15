@@ -53,4 +53,11 @@ if ($remote) {
     Write-Host ""
     Write-Host "Attempting push to origin main..." -ForegroundColor Cyan
     git push origin main --tags
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "❌ Failed to push to remote repository ($remote)!" -ForegroundColor Red
+        Write-Host "   Please ensure the repository exists on GitHub and git credentials are authenticated." -ForegroundColor Yellow
+        exit $LASTEXITCODE
+    } else {
+        Write-Host "🚀 Successfully pushed to origin main with tags!" -ForegroundColor Green
+    }
 }
