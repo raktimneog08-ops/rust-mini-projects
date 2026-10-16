@@ -1,0 +1,12 @@
+[package]
+name = "fibonacci_generator_cli"
+version = "0.1.0"
+edition = "2021"
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Project 05: High-performance Fibonacci sequence generator with arbitrary-precision arithmetic, multiple algorithmic strategies, and CLI analytics"
+
+[dependencies]
+
+[dev-dependencies]

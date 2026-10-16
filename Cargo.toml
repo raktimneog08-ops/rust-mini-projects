@@ -5,6 +5,7 @@ members = [
     "02-fizzbuzz",
     "03-guessing-game",
     "04-temperature-converter",
+    "05-fibonacci-generator",
     "100-rust-to-wasm-game",
 ]
 default-members = [
@@ -12,6 +13,7 @@ default-members = [
     "02-fizzbuzz",
     "03-guessing-game",
     "04-temperature-converter",
+    "05-fibonacci-generator",
     "100-rust-to-wasm-game",
 ]
 
